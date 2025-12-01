@@ -3,9 +3,6 @@ import os
 import random
 
 
-
-
-
 class Enemy:
     def __init__(self,x,y,screen_width, screen_height,speed=180):
         self.x = x

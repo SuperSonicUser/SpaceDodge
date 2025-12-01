@@ -15,9 +15,12 @@ class PlayerIcon:
         # Load the spaceship image
         image_path = os.path.join("assets", "player.png")
         bullet_path = os.path.join("assets", "bullet.png")
+        bullet_sound_path = os.path.join("assets", "bullet_sound.mp3")
 
         self.image = pygame.image.load(image_path).convert_alpha()
         self.bullet = pygame.image.load(bullet_path).convert_alpha()
+        self.bullet_sound = pygame.mixer.Sound(bullet_sound_path)
+        self.bullet_sound.set_volume(0.4)
         
         # Resize
         self.image = pygame.transform.scale(self.image, (50, 50))
@@ -29,7 +32,7 @@ class PlayerIcon:
         self.rect.center = (self.x, self.y)
 
         self.shield_active = False
-        
+
         self.bullets = []
         self.bullet_speed = 500  # pixels per second
         self.shot_cooldown = 0.18  # seconds between shots
@@ -48,6 +51,7 @@ class PlayerIcon:
             bullet_rect.midbottom = self.rect.midtop
             self.bullets.append(bullet_rect)
             self._cooldown_timer = self.shot_cooldown
+            self.bullet_sound.play(maxtime=200, fade_ms=40)
 
         # Move bullets up and remove off-screen ones
         for bullet in list(self.bullets):
